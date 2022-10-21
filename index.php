@@ -8,7 +8,7 @@ $dotenv->load();
 
 $adress     = 'refudev.mail@gmail.com';
 $subject    = 'E-mail automático 09';
-$body       = '<h1>E-mail automático</h1><br><p>Este email foi enviado <b>com sucesso</b> de maneira automática.</p>';
+$body       = file_get_contents(__DIR__.'/app/email-content.html', true);
 
 $email = new Email;
 $email->login($_ENV['EMAIL_USER'], $_ENV['EMAIL_PASS']);
