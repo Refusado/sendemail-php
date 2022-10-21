@@ -2,81 +2,74 @@
 
 namespace App;
 
-require __DIR__.'/vendor/autoload.php';
-
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception as PHPMailerException;
 
 class Email {
+    // DEFNIÇÃO CREDÊNCIAS SMTP
+    private $username;
+    private $password;
+    const HOST      = 'smtp.gmail.com';
+    const SECURE    = 'TLS';
+    const PORT      = 587;
+    const CHARSET   = 'UTF-8';
+    
+    public function login($user, $pass) {
+        $this->username = $user;
+        $this->password = $pass;
+    }
 
-    // CREDÊNCIAS DE ACESSO SMTP
-    const HOST = 'smtp.gmail.com';
-    const USER = '';
-    const PASS = '';
-    const SECURE = 'TLS';
-    const PORT = 587;
-    const CHARSET = 'UTF-8';
-
-    // DADOS DO REMETENTE
+    // DEFINIÇÃO DADOS DO REMETENTE
     const FROM_EMAIL = 'refudev.mail@gmail.com';
-    const FROM_NAME = 'Renan Freitas Desenvolvedor';
+    const FROM_NAME = 'Renan Desenvolvedor';
 
     // MENSAGEM DE ERRO
     private $error;
-
-    // RETORNA A MENSAGEM DO ERRO
     public function getError() {
         return $this->error;
     }
 
     // EXECUTA O ENVIO DO EMAIL
-    public function sendEmail($addresses, $subject, $body, $attachments = []) {
-        // limpar a mensagem de erro
+    public function sendEmail($addresses, $title, $content, $attachments = []) {
         $this->error = '';
 
-        // INSTANCIAR DE PHPMAILER
-        $obMail = new PHPMailer(true);
+        // INSTÂNCIA DO PHPMAILER
+        $mail = new PHPMailer(true);
         try {
-
             // DADOS DE ACESSO SMTP
-            $obMail->isSMTP(true);
-            $obMail->Host = self::HOST;
-            $obMail->SMTPAuth = true;
-            $obMail->Username = self::USER;
-            $obMail->Password = self::PASS;
-            $obMail->SMTPSecure = self::SECURE;
-            $obMail->Port = self::PORT;
-            $obMail->CharSet = self::CHARSET;
+            $mail->isSMTP(true);
+            $mail->Host       = self::HOST;
+            $mail->Username   = $this->username;
+            $mail->Password   = $this->password;
+            $mail->SMTPAuth   = true;
+            $mail->SMTPSecure = self::SECURE;
+            $mail->Port       = self::PORT;
+            $mail->CharSet    = self::CHARSET;
 
-            // REMETENTE
-            $obMail->setFrom(self::FROM_EMAIL, self::FROM_NAME);
+            // ATRIBUINDO DEFINIÇÕES DO REMETENTE
+            $mail->setFrom(self::FROM_EMAIL, self::FROM_NAME);
 
-            // DESDINATÁRIOS
+            // LIDANDO COM VÁRIOS DESDINATÁRIOS
             $addresses = is_array($addresses) ? $addresses : [$addresses];
             foreach($addresses as $address) {
-                $obMail->addAddress($address);
+                $mail->addAddress($address);
             }
 
-            // ANEXOS
+            // LIDANDO COM VÁRIOS ANEXOS
             $attachments = is_array($attachments) ? $attachments : [$attachments];
             foreach($attachments as $attachment) {
-                $obMail->addAttachment($attachment);
+                $mail->addAttachment($attachment);
             }
 
             // CONTEÚDO DO EMAIL
-            $obMail->isHTML(true);
-            $obMail->Subject = $subject;
-            $obMail->Body = $body;
+            $mail->isHTML(true);
+            $mail->Subject  = $title;
+            $mail->Body     = $content;
 
-            // ENVIA O EMAIL;
-            return $obMail->send();
-
+            return $mail->send();
         } catch(PHPMailerException $e) {
             $this->error = $e->getMessage();
             return false;
         }
-        
-
     }
-
 }

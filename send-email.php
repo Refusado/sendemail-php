@@ -1,14 +1,23 @@
 <?php
 
 require __DIR__.'/vendor/autoload.php';
-
 use \App\Email;
 
-$adress = 'refusado@gmail.com';
-$subject = 'Mailer test 01';
-$body = 'Teste 01';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
-$obEmail = new Email;
-$success = $obEmail->sendEmail($adress, $subject, $body);
+$adress     = 'refudev.mail@gmail.com';
+$subject    = 'E-mail automático 09';
+$body       = '<h1>E-mail automático</h1><br><p>Este email foi enviado <b>com sucesso</b> de maneira automática.</p>';
 
-echo $success ? 'Mensagem enviada com sucesso!' : $obEmail->getError();
+$email = new Email;
+$email->login($_ENV['EMAIL_USER'], $_ENV['EMAIL_PASS']);
+
+if($email->sendEmail($adress, $subject, $body)) {
+    echo "Mensagem enviada com sucesso! \n";
+} else {
+    global $email;
+    
+    echo "Erro ao enviar e-mail.\n";
+    echo $email->getError() . "\n";
+}
