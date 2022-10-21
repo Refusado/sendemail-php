@@ -3,12 +3,13 @@
 require __DIR__.'/vendor/autoload.php';
 use \App\Email;
 
+$adress     = 'refudev.mail@gmail.com';
+$subject    = 'Email automático';
+
+$body       = file_get_contents(__DIR__.'/assets/email/content.html', true);
+
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-
-$adress     = 'refudev.mail@gmail.com';
-$subject    = 'E-mail automático 09';
-$body       = file_get_contents(__DIR__.'/app/email-content.html', true);
 
 $email = new Email;
 $email->login($_ENV['EMAIL_USER'], $_ENV['EMAIL_PASS']);
