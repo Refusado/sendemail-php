@@ -6,7 +6,7 @@ Este é um sistema de envio de email simples feito em PHP através da biblioteca
 
 Ao enviar emails com este sistema, também é possível
 
-- Enviar automaticamente para um ou vários destinários escolhidos;
+- Enviar automaticamente para um ou vários destinatários escolhidos;
 - Especificar a quem o email enviado será respondido;
 - Definir dinamicamente assunto e corpo do e-mail (HTML, Plain Text e Rich Text);
 - Adicionar anexos nomeados
