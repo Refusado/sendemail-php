@@ -13,6 +13,7 @@ class Email {
     const SECURE    = 'TLS';
     const PORT      = 587;
     const CHARSET   = 'UTF-8';
+    CONST LANGUAGE  = 'pt_br';
     
     public function login($user, $pass) {
         $this->username = $user;
@@ -21,7 +22,7 @@ class Email {
 
     // DEFINIÇÃO DADOS DO REMETENTE
     const FROM_EMAIL = 'refudev.mail@gmail.com';
-    const FROM_NAME = 'Renan Desenvolvedor';
+    const FROM_NAME  = 'Renan Desenvolvedor';
 
     // MENSAGEM DE ERRO
     private $error;
@@ -37,6 +38,7 @@ class Email {
         $mail = new PHPMailer(true);
         try {
             // DADOS DE ACESSO SMTP
+            $mail->setLanguage(self::LANGUAGE);
             $mail->isSMTP(true);
             $mail->Host       = self::HOST;
             $mail->Username   = $this->username;
@@ -45,6 +47,7 @@ class Email {
             $mail->SMTPSecure = self::SECURE;
             $mail->Port       = self::PORT;
             $mail->CharSet    = self::CHARSET;
+            $mail->addReplyTo('renanfreitas.contato@gmail.com', 'Renan Desenvolvedor');
 
             // ATRIBUINDO DEFINIÇÕES DO REMETENTE
             $mail->setFrom(self::FROM_EMAIL, self::FROM_NAME);
