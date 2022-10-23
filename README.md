@@ -14,12 +14,12 @@ Ao enviar emails com este sistema, também é possível
 ### Exemplo de email
 <details>
     <summary>Mostrar imagem</summary>
-    
-[<img height="600px" src="https://raw.githubusercontent.com/Refusado/sendemail-php/main/assets/img/email-exemple.png?token=GHSAT0AAAAAABYAR2CHRLE2RTPWXUAO6ZQ2Y2UFNHA" title="Exemplo de email enviado">](https://github.com/Refusado/sendemail-php/blob/main/assets/img/email-exemple.png)
+
+[<img width="100%" src="/assets/img/email-exemple.png" title="Exemplo de email enviado">](https://github.com/Refusado/sendemail-php/blob/main/assets/img/email-exemple.png)
 
 </details>
 
-#### Serviço SMTP
+### Serviço SMTP
 
 O *Simple Mail Protocol* ou *Protocolo de Transferência de Correio Simples* é o protocolo padrão quando se fala em envio de emails entre servidores. Na sequência as configurações de cliente do SMTP para trabalhar com o Gmail.
 
